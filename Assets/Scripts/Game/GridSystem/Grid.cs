@@ -1,0 +1,59 @@
+using Assets.Scripts.Game.Tiles;
+using UnityEngine;
+
+public class Grid
+{
+    public void SetUpGrid(int wigth, int height)
+    {
+        Wigth = wigth;
+        Height = height;
+
+        GameGrid = new Tile[wigth, height];
+    }
+
+    public Tile[,] GameGrid { get; private set; }
+
+    public int Wigth { get; private set; }
+    public int Height { get; private set; }
+
+    public Vector2Int CurrentPosition { get; private set; }
+    public Vector2Int TargetPosition { get; private set; }
+
+    public Vector2Int SetCurrentPosition(Vector2Int value) => CurrentPosition = value;
+    public Vector2Int SetTargetPosition(Vector2Int value) => TargetPosition = value;
+
+    public Vector3 GridToWorld(int x, int y) => new Vector3(x, y, 0);
+
+    public Vector2Int WorldToGrid(Vector3 worldPosition)
+    {
+        var x = Mathf.RoundToInt (worldPosition.x);
+        var y = Mathf.RoundToInt(worldPosition.y);
+
+        return new Vector2Int(x, y);
+    }
+
+    public void Setvalue(int x, int y, Tile tile)
+    {
+        if (IsValidPosition(x, y))
+        {
+
+            GameGrid[x, y] = tile;
+        }
+    }
+
+    public void Setvalue(Vector3 worldPosition, Tile tile)
+    {
+        var worldToGrid = WorldToGrid(worldPosition);
+        Setvalue(worldToGrid.x, worldToGrid.y, tile);
+    }
+
+    public Tile Getvalue(int x, int y) => IsValidPosition(x, y) ? GameGrid[x, y] : default;
+
+    public Tile Getvalue(Vector3 worldPosition)
+    {
+        var worldToGrid = WorldToGrid(worldPosition);
+        return Getvalue(worldToGrid.x, worldToGrid.y);
+    }
+
+    public bool IsValidPosition(int x, int y) => x >= 0 && y >= 0 && x < Wigth && y < Height;
+}
