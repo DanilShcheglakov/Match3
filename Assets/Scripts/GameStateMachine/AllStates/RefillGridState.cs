@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Animations;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.MatchedTiles;
+using Assets.Scripts.Game.Score;
 using Assets.Scripts.Game.Tiles;
 using Cysharp.Threading.Tasks;
 using System;
@@ -21,12 +22,14 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         IAnimation _animation;
         private MatchFinder _matchFinder;
         private TilePool _tilePool;
+        private GameProgress _gameProgress;
+
         private readonly Transform _parent;
 
         private List<Vector2Int> _tilesToRefill = new List<Vector2Int>();
 
         public RefillGridState(Grid grid, IStateSwitcher switcher, IAnimation animation,
-            MatchFinder matchFinder, TilePool tilePool, Transform parent)
+            MatchFinder matchFinder, TilePool tilePool, Transform parent, GameProgress gameProgress)
         {
             _grid = grid;
             _switcher = switcher;
@@ -34,6 +37,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
             _matchFinder = matchFinder;
             _tilePool = tilePool;
             _parent = parent;
+            _gameProgress = gameProgress;
         }
 
         public void Dispose()
@@ -43,7 +47,6 @@ namespace Assets.Scripts.GameStateMachine.AllStates
 
         public async void Enter()
         {
-            Debug.Log("REFILL");
             await FallTiles();
             await Refill();
             if (_matchFinder.CheckBoardForMatches(_grid))
@@ -51,7 +54,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
                 _switcher.SwitchState<RemoveTilesState>();
                 //playSound
             }
-            else 
+            else
             {
                 //playSound
                 CheckEndGame();
@@ -60,7 +63,12 @@ namespace Assets.Scripts.GameStateMachine.AllStates
 
         private void CheckEndGame()
         {
-            _switcher.SwitchState<PlayerTurnState>();
+            if (_gameProgress.CheckGoalScore())
+                _switcher.SwitchState<WinState>();
+            else if (_gameProgress.Moves <= 0)
+                _switcher.SwitchState<LooseState>();
+            else
+                _switcher.SwitchState<PlayerTurnState>();
         }
 
         public void Exit()
@@ -78,7 +86,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
                 {
                     if (_grid.Getvalue(x, y)) continue;
 
-                    for (int i = y+1; i < _grid.Height; i++)
+                    for (int i = y + 1; i < _grid.Height; i++)
                     {
                         if (_grid.Getvalue(x, i) == null) continue;
                         if (_grid.Getvalue(x, i).IsInteractable == false) continue;
@@ -104,10 +112,10 @@ namespace Assets.Scripts.GameStateMachine.AllStates
             {
                 for (int y = 0; y < _grid.Height; y++)
                 {
-                    if (_grid.Getvalue(x, y)!=null) continue;
-                   var tile = _tilePool.GetTile(_grid.GridToWorld(x, y), _parent);
+                    if (_grid.Getvalue(x, y) != null) continue;
+                    var tile = _tilePool.GetTile(_grid.GridToWorld(x, y), _parent);
                     tile.gameObject.SetActive(true);
-                    _grid.Setvalue(x,y, tile);
+                    _grid.Setvalue(x, y, tile);
                     _animation.Reveal(tile.gameObject, 0.2f);
                     //playSound
                     await UniTask.Delay(TimeSpan.FromSeconds(0.1f), _cts.IsCancellationRequested);

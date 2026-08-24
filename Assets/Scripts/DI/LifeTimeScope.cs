@@ -13,6 +13,7 @@ using Assets.Scripts.Game.Tiles;
 using Assets.Scripts.Game.GridSystem;
 using Assets.Scripts.Animations;
 using Assets.Scripts.Game.MatchedTiles;
+using Assets.Scripts.Game.Score;
 
 namespace Assets.Scripts.DI
 {
@@ -25,13 +26,14 @@ namespace Assets.Scripts.DI
         {
             builder.RegisterInstance(_gameBoard);
             builder.RegisterInstance(_loader);
-            builder.Register<Grid>(Lifetime.Singleton);
-            builder.Register<IAnimation, AnimationManager>(Lifetime.Singleton);
+            builder.Register<Grid>(Lifetime.Singleton);            
             builder.Register<GameDebug>(Lifetime.Singleton);
             builder.Register<SetupCamera>(Lifetime.Singleton);
             builder.Register<TilePool>(Lifetime.Singleton);
             builder.Register<BlankTilesSetup>(Lifetime.Singleton);
             builder.Register<MatchFinder>(Lifetime.Singleton);
+            builder.Register<GameProgress>(Lifetime.Singleton);
+            builder.Register<ScoreCalculator>(Lifetime.Singleton);
         }
     }
 }

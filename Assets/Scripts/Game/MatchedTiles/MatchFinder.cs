@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Game.Score;
 using Assets.Scripts.Game.Tiles;
 using UnityEngine;
 
@@ -72,11 +73,11 @@ namespace Assets.Scripts.Game.MatchedTiles
             CheckDirection(tileGridPosition, Vector2Int.left, grid, tile, connectedTiles);
 
             if (connectedTiles.Count == 3)
-                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.right,
+                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.up,
                     MatchDirection.Horizontal);
 
             if (connectedTiles.Count > 3)
-                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.right,
+                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.up,
                     MatchDirection.LongHorizontal);
 
             connectedTiles.Clear();
@@ -85,11 +86,11 @@ namespace Assets.Scripts.Game.MatchedTiles
             CheckDirection(tileGridPosition, Vector2Int.down, grid, tile, connectedTiles);
 
             if (connectedTiles.Count == 3)
-                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.up,
+                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.right,
                     MatchDirection.Vertical);
 
             if (connectedTiles.Count > 3)
-                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.up,
+                return CheckForMultyMatch(connectedTiles, grid, Vector2Int.right,
                     MatchDirection.LongVertical);
 
             connectedTiles.Clear();
@@ -102,7 +103,7 @@ namespace Assets.Scripts.Game.MatchedTiles
             foreach (Tile tile in connectedTiles)
             {
                 var position = tile.transform.position;
-                List<Tile> multiconnectedTiles = new List<Tile>();
+                List<Tile> multiconnectedTiles = new List<Tile> { tile };
                 CheckDirection(grid.WorldToGrid(position), direction, grid, tile, multiconnectedTiles);
                 CheckDirection(grid.WorldToGrid(position), direction * -1, grid, tile, multiconnectedTiles);
 
@@ -112,7 +113,7 @@ namespace Assets.Scripts.Game.MatchedTiles
                 return new MatchResult(connectedTiles, MatchDirection.Multiply);
             }
 
-            return new MatchResult(connectedTiles, MatchDirection.Multiply);
+            return new MatchResult(connectedTiles, matchDirection);
         }
 
         public void ClearTilesToRemove()
