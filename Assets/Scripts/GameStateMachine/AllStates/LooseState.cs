@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Game.GameStateMachine;
+﻿using Assets.Scripts.Audio;
+using Assets.Scripts.Game.GameStateMachine;
+using Assets.Scripts.Game.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,9 +14,16 @@ namespace Assets.Scripts.GameStateMachine.AllStates
 {
     public class LooseState : IState
     {
+        private EndGamePanelView _endGame;
+
+        public LooseState(EndGamePanelView endGame)
+        {
+            _endGame = endGame;
+        }
+
         public void Enter()
         {
-            Debug.Log("Loose(((");
+            _endGame.ShowEndGamePanel(false);
         }
 
         public void Exit()

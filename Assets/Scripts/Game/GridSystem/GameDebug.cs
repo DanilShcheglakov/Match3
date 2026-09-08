@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.iOS;
 
 namespace Assets.Scripts.Game.GridSystem
 {
-    internal class GameDebug
+    public class GameDebug
     {
         private Grid _grid;
 

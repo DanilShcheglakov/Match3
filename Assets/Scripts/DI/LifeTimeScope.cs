@@ -14,6 +14,8 @@ using Assets.Scripts.Game.GridSystem;
 using Assets.Scripts.Animations;
 using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
+using Assets.Scripts.Game.UI;
+using Assets.Scripts.Game.EntryPoint;
 
 namespace Assets.Scripts.DI
 {
@@ -21,11 +23,14 @@ namespace Assets.Scripts.DI
     {
         [SerializeField] private GameBoard _gameBoard;
         [SerializeField] private GameResourcesLoader _loader;
+        [SerializeField] private EndGamePanelView _endGame;
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterEntryPoint<EntryPoint>();
             builder.RegisterInstance(_gameBoard);
             builder.RegisterInstance(_loader);
+            builder.RegisterInstance(_endGame);
             builder.Register<Grid>(Lifetime.Singleton);            
             builder.Register<GameDebug>(Lifetime.Singleton);
             builder.Register<SetupCamera>(Lifetime.Singleton);
@@ -34,6 +39,7 @@ namespace Assets.Scripts.DI
             builder.Register<MatchFinder>(Lifetime.Singleton);
             builder.Register<GameProgress>(Lifetime.Singleton);
             builder.Register<ScoreCalculator>(Lifetime.Singleton);
+            builder.Register<EndGame>(Lifetime.Singleton);
         }
     }
 }

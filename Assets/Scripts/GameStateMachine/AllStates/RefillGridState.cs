@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Animations;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
@@ -23,13 +24,14 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         private MatchFinder _matchFinder;
         private TilePool _tilePool;
         private GameProgress _gameProgress;
+        private AudioManager _audioManager;
 
         private readonly Transform _parent;
 
         private List<Vector2Int> _tilesToRefill = new List<Vector2Int>();
 
         public RefillGridState(Grid grid, IStateSwitcher switcher, IAnimation animation,
-            MatchFinder matchFinder, TilePool tilePool, Transform parent, GameProgress gameProgress)
+            MatchFinder matchFinder, TilePool tilePool, Transform parent, GameProgress gameProgress, AudioManager audioManager)
         {
             _grid = grid;
             _switcher = switcher;
@@ -38,6 +40,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
             _tilePool = tilePool;
             _parent = parent;
             _gameProgress = gameProgress;
+            _audioManager = audioManager;
         }
 
         public void Dispose()
@@ -52,11 +55,11 @@ namespace Assets.Scripts.GameStateMachine.AllStates
             if (_matchFinder.CheckBoardForMatches(_grid))
             {
                 _switcher.SwitchState<RemoveTilesState>();
-                //playSound
+                _audioManager.PlayMatch();
             }
             else
             {
-                //playSound
+                _audioManager.PlayNoMatch();
                 CheckEndGame();
             }
         }
@@ -100,7 +103,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
                     }
                 }
             }
-            //playSound
+            _audioManager.PlayWoosh();
             await UniTask.Delay(TimeSpan.FromSeconds(0.3f), _cts.IsCancellationRequested);
             _cts.Cancel();
         }
@@ -117,7 +120,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
                     tile.gameObject.SetActive(true);
                     _grid.Setvalue(x, y, tile);
                     _animation.Reveal(tile.gameObject, 0.2f);
-                    //playSound
+                    _audioManager.PlayPop();
                     await UniTask.Delay(TimeSpan.FromSeconds(0.1f), _cts.IsCancellationRequested);
                 }
             }

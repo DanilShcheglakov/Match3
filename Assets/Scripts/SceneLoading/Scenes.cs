@@ -10,6 +10,6 @@ namespace Assets.Scripts.SceneLoading
     {
         public const string BOOT = "Boot";
         public const string MENU = "Menu";
-        public const string Game = "Game";
+        public const string GAME = "Game";
     }
 }

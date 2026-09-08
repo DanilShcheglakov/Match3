@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Animations;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
@@ -21,14 +22,17 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         IAnimation _animation;
         private MatchFinder _matchFinder;
         private ScoreCalculator _scoreCalculator;
+        private AudioManager _audioManager;
 
-        public RemoveTilesState(Grid grid, IStateSwitcher switcher, IAnimation animation, MatchFinder matchFinder, ScoreCalculator scoreCalculator)
+        public RemoveTilesState(Grid grid, IStateSwitcher switcher, IAnimation animation,
+            MatchFinder matchFinder, ScoreCalculator scoreCalculator, AudioManager audioManager)
         {
             _grid = grid;
             _switcher = switcher;
             _animation = animation;
             _matchFinder = matchFinder;
             _scoreCalculator = scoreCalculator;
+            _audioManager = audioManager;
         }
 
         public async void Enter()
@@ -56,7 +60,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         {
             foreach (var tile in tilesToRemove)
             {
-                //playSound
+                _audioManager.PlayRemove();
                 var pos = grid.WorldToGrid(tile.transform.position);
                 grid.Setvalue(pos.x, pos.y, null);
                 await _animation.HideTile(tile.gameObject);

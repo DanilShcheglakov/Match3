@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Utils
 {
-    internal class SetupCamera
+    public class SetupCamera
     {
         private bool _isVertical;
 

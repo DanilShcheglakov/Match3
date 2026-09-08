@@ -15,44 +15,23 @@ namespace Assets.Scripts.Game.Board
 {
     public class GameBoard : MonoBehaviour
     {
-        [SerializeField] private LevelConfig _levelConfig;
-        [SerializeField] private bool _isDebbugActive;
-        [SerializeField] private TileConfig _tileConfig;
         private readonly List<Tile> _tilesToRefill = new List<Tile>();
-
         private Grid _grid;
-        private TilePool _tilePool;
-        private SetupCamera _setupCamera;
-        private GameDebug _debug;
-        private BlankTilesSetup _blankTilesSetup;
+        private TilePool _tilePool;    
         private IAnimation _animationManager;
         private MatchFinder _matchFinder;
-
-        public LevelConfig LevelConfig => _levelConfig;
+        private BlankTilesSetup _blankTilesSetup;
 
         [Inject]
-        private void Construct(Grid grid, SetupCamera setupCamera,
-            TilePool tilePool, GameDebug debug, BlankTilesSetup blankTilesSetup, 
+        private void Construct(Grid grid,
+            TilePool tilePool, BlankTilesSetup blankTilesSetup, 
             IAnimation animationManager, MatchFinder matchFinder)
         {
-            _grid = grid;
-            _setupCamera = setupCamera;
-            _tilePool = tilePool;
-            _debug = debug;
             _blankTilesSetup = blankTilesSetup;
+            _grid = grid;
+            _tilePool = tilePool;
             _animationManager = animationManager;
             _matchFinder = matchFinder;
-        }
-
-        private void Awake()
-        {
-            _grid.SetUpGrid(_levelConfig.Width,_levelConfig.Height);
-            _blankTilesSetup.SetupBlanks(_levelConfig);
-
-            _setupCamera.SetCameta(_grid.Wigth, _grid.Height, false);
-
-            if (_isDebbugActive)
-                _debug.ShowDebug(transform);
         }
 
         public void CreateBoard()

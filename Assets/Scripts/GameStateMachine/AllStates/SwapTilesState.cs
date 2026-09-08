@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Animations;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
@@ -22,32 +23,34 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         IAnimation _animation;
         private MatchFinder _matchFinder;
         private GameProgress _gameProgress;
+        private AudioManager _audioManager;
 
         public SwapTilesState(Grid grid, IStateSwitcher switcher, IAnimation animation, 
-            MatchFinder matchFinder, GameProgress gameProgress)
+            MatchFinder matchFinder, GameProgress gameProgress, AudioManager audioManager)
         {
             _grid = grid;
             _switcher = switcher;
             _animation = animation;
             _matchFinder = matchFinder;
             _gameProgress = gameProgress;
+            _audioManager = audioManager;   
         }
 
         public async void Enter()
         {
             _cts = new CancellationTokenSource();
-            //PlaySound
+            _audioManager.PlayWoosh();
             await SwapTiles(_grid.CurrentPosition, _grid.TargetPosition);
 
             if (_matchFinder.CheckBoardForMatches(_grid) == false)
             {
-                //noMatchSound
+                _audioManager.PlayNoMatch();
                 await SwapTiles(_grid.TargetPosition, _grid.CurrentPosition);
                 _switcher.SwitchState<PlayerTurnState>();
             }
             else 
             {
-                //MatchSound
+                _audioManager.PlayMatch();
                 _gameProgress.SpendMoves(); 
                 _switcher.SwitchState<RemoveTilesState>();
             }

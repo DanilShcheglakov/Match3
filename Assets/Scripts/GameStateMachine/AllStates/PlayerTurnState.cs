@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Animations;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Input;
 using System;
@@ -19,14 +20,16 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         private readonly IStateSwitcher _switcher;
         private readonly Camera _camera;
         private IAnimation _animation;
+        private AudioManager _audioManager;
 
-        public PlayerTurnState(Grid grid, IStateSwitcher switcher, IAnimation animation)
+        public PlayerTurnState(Grid grid, IStateSwitcher switcher, IAnimation animation, AudioManager audioManager)
         {
             _grid = grid;
             _switcher = switcher;
             _animation = animation;
             _reader = new InputReader();
             _camera = Camera.main;
+            _audioManager = audioManager;
 
             _reader.Click += OnTileClick;
         }
@@ -40,14 +43,14 @@ namespace Assets.Scripts.GameStateMachine.AllStates
 
             if (_grid.CurrentPosition == _emptyPosition)
             {
-                //playsound
+                _audioManager.PlayClick();
                 _grid.SetCurrentPosition(clickPosition);
                 _animation.AnimateTile(_grid.Getvalue(_grid.CurrentPosition.x, _grid.CurrentPosition.y), 1.2f);
             }
 
             else if (_grid.CurrentPosition == clickPosition)
             {
-                //playsound
+                _audioManager.PlayDeselect();
                 DeselectTile();
             }
             else if (_grid.CurrentPosition != clickPosition && IsSwappable(_grid.CurrentPosition, clickPosition))
