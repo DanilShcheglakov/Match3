@@ -1,16 +1,15 @@
 ﻿using Assets.Scripts.Animations;
 using Assets.Scripts.Audio;
+using Assets.Scripts.Game.Board;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
 using Assets.Scripts.Game.Tiles;
+using Assets.Scripts.Game.Utils;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.GameStateMachine.AllStates
 {
@@ -23,9 +22,12 @@ namespace Assets.Scripts.GameStateMachine.AllStates
         private MatchFinder _matchFinder;
         private ScoreCalculator _scoreCalculator;
         private AudioManager _audioManager;
+        private FXPool _fxPool;
+        private GameBoard _gameBoard;
 
         public RemoveTilesState(Grid grid, IStateSwitcher switcher, IAnimation animation,
-            MatchFinder matchFinder, ScoreCalculator scoreCalculator, AudioManager audioManager)
+            MatchFinder matchFinder, ScoreCalculator scoreCalculator, AudioManager audioManager,
+            FXPool fXPool, GameBoard gameBoard)
         {
             _grid = grid;
             _switcher = switcher;
@@ -33,6 +35,8 @@ namespace Assets.Scripts.GameStateMachine.AllStates
             _matchFinder = matchFinder;
             _scoreCalculator = scoreCalculator;
             _audioManager = audioManager;
+            _fxPool = fXPool;
+            _gameBoard = gameBoard;
         }
 
         public async void Enter()
@@ -64,7 +68,7 @@ namespace Assets.Scripts.GameStateMachine.AllStates
                 var pos = grid.WorldToGrid(tile.transform.position);
                 grid.Setvalue(pos.x, pos.y, null);
                 await _animation.HideTile(tile.gameObject);
-                //FX
+                _fxPool.GetFXFromPool(tile.transform.position, _gameBoard.transform);
             }
             _cts.Cancel();
         }

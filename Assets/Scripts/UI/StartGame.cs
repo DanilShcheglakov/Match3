@@ -2,13 +2,7 @@
 using Assets.Scripts.Data;
 using Assets.Scripts.Levels;
 using Assets.Scripts.SceneLoading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using UnityEditor.SearchService;
 
 namespace Assets.Scripts.UI
 {

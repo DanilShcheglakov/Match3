@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Boot
+  m_EditorClassIdentifier: 
+  m_GroupName: Boot
+  m_GUID: 906b84cc38aa65248b9db3beb85b6297
+  m_SerializeEntries:
+  - m_GUID: 052faaac586de48259a63d0c4782560b
+    m_Address: InputSystem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3da8eb67b6b6fa74091e4c32fe9126dc
+    m_Address: Whoosh
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 535f0cfbc77b5a84b979efbf5ad46904
+    m_Address: LoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ada758173d1f004a931923ff26fc75f
+    m_Address: Assets/Audio/NewAudioMixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c513020815b1324cb00dee683a06a80
+    m_Address: Remove
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7463cc9784e95fc41be0dbfbcc46dbae
+    m_Address: Boot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7889d2d8c78047244a4e0219c90183fb
+    m_Address: StopMusic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afc193ec70b65004d9880369fe868eba
+    m_Address: VContainerSettings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f18869d3a19046e41a42bb847b165c2a
+    m_Address: Pop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2c0ce9f794f081468bd73f488540b59
+    m_Address: RootScopePrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 70d50c7c201a5944f8d82b590b9f6509, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5773edd7838eda74ab8a9838c353177e, type: 2}
+    - {fileID: 11400000, guid: d77b640b85b8c2d449576bf474e4ce6d, type: 2}

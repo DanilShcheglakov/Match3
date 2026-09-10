@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Game
+  m_EditorClassIdentifier: 
+  m_GroupName: Game
+  m_GUID: 8eb4ca22bd39e6e44b0919aac4e0600d
+  m_SerializeEntries:
+  - m_GUID: 020b3307801594e4a853fc50977b2f9e
+    m_Address: Click
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f210ed3f498c3b43be87072ee2027fc
+    m_Address: Blank
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1da63bb7bf822754db086a8df4e9ee0e
+    m_Address: Loose
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36e75d39b51e6d44e9b72a56cc9ef73a
+    m_Address: GameMusic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5dca580b83d2f4745b795d04231e5a32
+    m_Address: Deselect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ddb6d37b273b9e4da024634d42de883
+    m_Address: Win
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99c9720ab356a0642a771bea13969a05
+    m_Address: Game
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a422b408c8c8ce14d86d2a701bcddb7c
+    m_Address: bg_Board
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c869be4a54888b34e807550cc2414c19
+    m_Address: NoMatch
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d266e306f14de0f418bfbc2c78a870ae
+    m_Address: FXPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d75159083b8338f4bb3a9ad09a2a7842
+    m_Address: TilePrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1f13ac818512a444883bf0f7dcdc60a
+    m_Address: BackGroundTile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3dcd03b043f9e34692c4aac2be00e57
+    m_Address: Match
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 70d50c7c201a5944f8d82b590b9f6509, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 817913b23225bbc428298525487bc07b, type: 2}
+    - {fileID: 11400000, guid: f93cda44a8d083f4cbd8e29c77a2e1b3, type: 2}

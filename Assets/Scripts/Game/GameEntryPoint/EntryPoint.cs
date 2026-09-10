@@ -12,9 +12,6 @@ using Assets.Scripts.Game.Utils;
 using Assets.Scripts.Levels;
 using Assets.Scripts.ResourcesLoading;
 using Assets.Scripts.SceneLoading;
-using System.Collections;
-using UnityEngine;
-using VContainer;
 using VContainer.Unity;
 
 namespace Assets.Scripts.Game.EntryPoint
@@ -38,6 +35,8 @@ namespace Assets.Scripts.Game.EntryPoint
         private SetupCamera _setupCamera;
         private IAsyncSceneLoading _sceneLoading;
         private EndGamePanelView _endGame;
+        private BackGroundTileSetup _backGroundTileSetup;
+        private FXPool _fxPool;
 
         private bool _isDebugging;
 
@@ -45,7 +44,7 @@ namespace Assets.Scripts.Game.EntryPoint
             GameProgress gameProgress, MatchFinder matchFinder, Grid grid,
             GameBoard gameBoard, GameDebug debug, TilePool tilePool, GameData gameData, AudioManager audioManager,
             IAnimation animation, GameResourcesLoader resourcesLoader, SetupCamera setupCamera, IAsyncSceneLoading sceneLoading,
-            EndGamePanelView endGame)
+            EndGamePanelView endGame, BackGroundTileSetup backGroundTileSetup, FXPool fxPool)
         {
             _scoreCalculator = scoreCalculator;
             _blankTilesSetup = blankTilesSetup;
@@ -62,9 +61,11 @@ namespace Assets.Scripts.Game.EntryPoint
             _setupCamera = setupCamera;
             _sceneLoading = sceneLoading;
             _endGame = endGame;
+            _backGroundTileSetup = backGroundTileSetup;
+            _fxPool = fxPool;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
             _levelConfig = _gameData.CurrenLevel;
 
@@ -74,13 +75,13 @@ namespace Assets.Scripts.Game.EntryPoint
             _grid.SetUpGrid(_levelConfig.Width, _levelConfig.Height);
             _gameProgress.LoadLevelConfig(_levelConfig.GoalScore, _levelConfig.Moves);
 
-            //await resources
+            await _resourcesLoader.Load();
 
             _setupCamera.SetCameta(_grid.Wigth, _grid.Height, false);
             _blankTilesSetup.SetupBlanks(_levelConfig);
 
             _stateMachine = new StateMachine(_gameBoard, _grid, _animation, _matchFinder, _tilePool,
-                _gameProgress, _scoreCalculator, _audioManager, _endGame);
+                _gameProgress, _scoreCalculator, _audioManager, _endGame, _levelConfig, _backGroundTileSetup, _blankTilesSetup, _fxPool);
 
             _sceneLoading.LoadingIsDone(true);
         }

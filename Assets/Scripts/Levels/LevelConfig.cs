@@ -29,7 +29,7 @@ namespace Assets.Scripts.Levels
 
     public enum TilesSets
     {
-        Kingtom, 
-        Jam
+        Fruits, 
+        Gem
     }
 }

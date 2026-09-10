@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: MainGroup_ContentUpdateGroupSchema
+  m_Script: {fileID: 11500000, guid: beb6437ec4ce5384db4cc3cd59a278c0, type: 3}
+  m_Name: BlueGem
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 9c2471764a65be04cb622b5e30515faf, type: 2}
-  m_StaticContent: 0
+  _sprite: {fileID: 21300000, guid: 48942830bc2f8b645a0f01e7e948ee0b, type: 3}
+  _tileKind: 0
+  _isInteractable: 1

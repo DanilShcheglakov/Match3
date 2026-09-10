@@ -6,8 +6,10 @@ using Assets.Scripts.Game.MatchedTiles;
 using Assets.Scripts.Game.Score;
 using Assets.Scripts.Game.Tiles;
 using Assets.Scripts.Game.UI;
+using Assets.Scripts.Game.Utils;
 using Assets.Scripts.GameStateMachine.AllStates;
 using Assets.Scripts.Input;
+using Assets.Scripts.Levels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +32,15 @@ namespace Assets.Scripts.Game.GameStateMachine
         private ScoreCalculator _scoreCalculator;
         private AudioManager _audioManager;
         private EndGamePanelView _endGamePanelView;
+        private LevelConfig _levelConfig;
+        private BackGroundTileSetup _backGroundTileSetup;
+        private BlankTilesSetup _blankTilesSetup;
+        private FXPool _fxPool;
 
         public StateMachine(GameBoard gameBoard, Grid grid, IAnimation animation, MatchFinder matchFinder,
-            TilePool tilePool, GameProgress gameProgress, ScoreCalculator scoreCalculator, 
-            AudioManager audioManager, EndGamePanelView endGame)
+            TilePool tilePool, GameProgress gameProgress, ScoreCalculator scoreCalculator,
+            AudioManager audioManager, EndGamePanelView endGame,
+            LevelConfig levelConfig, BackGroundTileSetup backGroundTileSetup, BlankTilesSetup blankTilesSetup, FXPool fXPool)
         {
             _gameBoard = gameBoard;
             _grid = grid;
@@ -44,13 +51,17 @@ namespace Assets.Scripts.Game.GameStateMachine
             _scoreCalculator = scoreCalculator;
             _audioManager = audioManager;
             _endGamePanelView = endGame;
+            _levelConfig = levelConfig;
+            _backGroundTileSetup = backGroundTileSetup;
+            _blankTilesSetup = blankTilesSetup;
+            _fxPool = fXPool;
 
             _states = new List<IState>()
             {
-               new PrepareState (this, _gameBoard),
+               new PrepareState (this, _gameBoard, _backGroundTileSetup,_blankTilesSetup,_levelConfig),
                new PlayerTurnState(_grid, this, _animation, _audioManager),
                new SwapTilesState(_grid, this, _animation, _matchFinder, _gameProgress,_audioManager),
-               new RemoveTilesState(_grid, this, _animation, _matchFinder, _scoreCalculator, _audioManager),
+               new RemoveTilesState(_grid, this, _animation, _matchFinder, _scoreCalculator, _audioManager,_fxPool,_gameBoard),
                new RefillGridState(_grid, this, _animation, _matchFinder, _tilePool, _gameBoard.transform, _gameProgress,_audioManager),
                new WinState(_endGamePanelView),
                new LooseState(_endGamePanelView)

@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.ResourcesLoading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -42,7 +39,7 @@ namespace Assets.Scripts.Game.Tiles
 
         public Tile CreateBlankTile(Vector3 position, Transform parent)
         {
-            var blankPrefab = _objectResolver.Instantiate(_resourcesLoader.BlankPrefab, 
+            var blankPrefab = _objectResolver.Instantiate(_resourcesLoader.TilePrefab, 
                 position, Quaternion.identity, parent);
 
             var blankTile =blankPrefab.GetComponent<Tile>();
@@ -63,7 +60,7 @@ namespace Assets.Scripts.Game.Tiles
             return tile;
         }
 
-        private TileConfig GetRandomTileConfig() => _resourcesLoader.TileSetConfig.Set
-            [UnityEngine.Random.Range(0,_resourcesLoader.TileSetConfig.Set.Count())];
+        private TileConfig GetRandomTileConfig() => _resourcesLoader.CurrentTileSet
+            [UnityEngine.Random.Range(0,_resourcesLoader.CurrentTileSet.Count())];
     }
 }
