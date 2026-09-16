@@ -166,7 +166,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.UnityTechnologies.com.unity.template.urpblank
+    Android: com.UnityTechnologies.match3
     Standalone: com.Unity-Technologies.com.unity.template.urp-blank
     iPhone: com.Unity-Technologies.com.unity.template.urp-blank
   buildNumber:
@@ -824,7 +824,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;DOTWEEN_NOPHYSICS;DOTWEEN_NOPHYSICS2D
+    Android: DOTWEEN;DOTWEEN_NOPHYSICS;DOTWEEN_NOPHYSICS2D;UNITASK_DOTWEEN_SUPPORT
     EmbeddedLinux: DOTWEEN;DOTWEEN_NOPHYSICS;DOTWEEN_NOPHYSICS2D
     GameCoreScarlett: DOTWEEN;DOTWEEN_NOPHYSICS;DOTWEEN_NOPHYSICS2D
     GameCoreXboxOne: DOTWEEN;DOTWEEN_NOPHYSICS;DOTWEEN_NOPHYSICS2D
@@ -859,7 +859,7 @@ PlayerSettings:
   gcIncremental: 1
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform: {}
-  editorAssembliesCompatibilityLevel: 1
+  editorAssembliesCompatibilityLevel: 2
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Match3
@@ -936,7 +936,7 @@ PlayerSettings:
   hmiCpuConfiguration: 
   hmiLogStartupTiming: 0
   qnxGraphicConfPath: 
-  apiCompatibilityLevel: 6
+  apiCompatibilityLevel: 3
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0

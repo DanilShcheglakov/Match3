@@ -26,8 +26,8 @@ namespace Assets.Scripts.Game.Utils
         private float GetOrtoSize(int wight, int hight)
         {
             return _isVertical 
-                ? (wight + 1f) * Screen.height / Screen.width * 0.5f 
-                :(hight + 10f ) * Screen.height / Screen.width * 0.5f;
+                ? (wight + 10f) * Screen.height / Screen.width * 0.5f 
+                :(hight + 25f ) * Screen.height / Screen.width * 0.5f;
         }
     }
 }

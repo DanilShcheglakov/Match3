@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Save;
+﻿using Assets.Scripts.FireBase;
+using Assets.Scripts.Save;
 using Assets.Scripts.SceneLoading;
 using DG.Tweening;
 using System;
@@ -15,15 +16,19 @@ namespace Assets.Scripts.Boot
     {
         private IAsyncSceneLoading _sceneLoading;
         private SaveProgress _saveProgress;
+        FirebaseInitializer _firebase;
 
-        public BootEntryPoint(IAsyncSceneLoading sceneLoading, SaveProgress saveProgress)
+        public BootEntryPoint(IAsyncSceneLoading sceneLoading, SaveProgress saveProgress,FirebaseInitializer firebase)
         {
             _sceneLoading = sceneLoading;
             _saveProgress = saveProgress;
+            _firebase = firebase;
         }
 
         public async void Initialize()
         {
+            await _firebase.InitializeAsync();
+
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
