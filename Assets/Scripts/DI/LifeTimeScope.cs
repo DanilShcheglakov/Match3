@@ -7,6 +7,7 @@ using Assets.Scripts.Game.Tiles;
 using Assets.Scripts.Game.UI;
 using Assets.Scripts.Game.Utils;
 using Assets.Scripts.ResourcesLoading;
+using Assets.Scripts.Tools;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -25,6 +26,8 @@ namespace Assets.Scripts.DI
             builder.RegisterInstance(_gameBoard);
             builder.RegisterInstance(_endGame);
             builder.RegisterInstance(_progress);
+            builder.Register<LevelTimer>(Lifetime.Singleton).As<ITimer>();
+            builder.RegisterEntryPoint<LevelTimerTicker>();
             builder.Register<GameResourcesLoader>(Lifetime.Singleton);
             builder.Register<FXPool>(Lifetime.Singleton);
             builder.Register<Grid>(Lifetime.Singleton);            

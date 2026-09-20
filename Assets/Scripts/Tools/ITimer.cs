@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assets.Scripts.Tools
+{
+    public interface ITimer
+    {
+        float ElapsedSeconds { get; }
+
+        void Start();
+        void Stop();
+        void Tick(float unscaledDeltaTime);
+        void SetFocused(bool isFocused);
+    }
+}

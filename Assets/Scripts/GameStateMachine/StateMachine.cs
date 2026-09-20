@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Animations;
 using Assets.Scripts.Audio;
+using Assets.Scripts.FireBase.Analitycs;
 using Assets.Scripts.Game.Board;
 using Assets.Scripts.Game.GameStateMachine.AllStates;
 using Assets.Scripts.Game.MatchedTiles;
@@ -36,11 +37,13 @@ namespace Assets.Scripts.Game.GameStateMachine
         private BackGroundTileSetup _backGroundTileSetup;
         private BlankTilesSetup _blankTilesSetup;
         private FXPool _fxPool;
+        private IAnalyticsService _analytics;
 
         public StateMachine(GameBoard gameBoard, Grid grid, IAnimation animation, MatchFinder matchFinder,
             TilePool tilePool, GameProgress gameProgress, ScoreCalculator scoreCalculator,
             AudioManager audioManager, EndGamePanelView endGame,
-            LevelConfig levelConfig, BackGroundTileSetup backGroundTileSetup, BlankTilesSetup blankTilesSetup, FXPool fXPool)
+            LevelConfig levelConfig, BackGroundTileSetup backGroundTileSetup, BlankTilesSetup blankTilesSetup, 
+            FXPool fXPool, IAnalyticsService analytics)
         {
             _gameBoard = gameBoard;
             _grid = grid;
@@ -55,10 +58,11 @@ namespace Assets.Scripts.Game.GameStateMachine
             _backGroundTileSetup = backGroundTileSetup;
             _blankTilesSetup = blankTilesSetup;
             _fxPool = fXPool;
+            _analytics = analytics;
 
             _states = new List<IState>()
             {
-               new PrepareState (this, _gameBoard, _backGroundTileSetup,_blankTilesSetup,_levelConfig),
+               new PrepareState (this, _gameBoard, _backGroundTileSetup,_blankTilesSetup,_levelConfig,_analytics ),
                new PlayerTurnState(_grid, this, _animation, _audioManager),
                new SwapTilesState(_grid, this, _animation, _matchFinder, _gameProgress,_audioManager),
                new RemoveTilesState(_grid, this, _animation, _matchFinder, _scoreCalculator, _audioManager,_fxPool,_gameBoard),

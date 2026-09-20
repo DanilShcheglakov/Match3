@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.Game.Board;
+﻿using Assets.Scripts.FireBase.Analitycs;
+using Assets.Scripts.Game.Board;
 using Assets.Scripts.Game.Tiles;
 using Assets.Scripts.GameStateMachine.AllStates;
 using Assets.Scripts.Levels;
+using Assets.Scripts.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +20,18 @@ namespace Assets.Scripts.Game.GameStateMachine.AllStates
         private GameBoard _gameBoard;
         private BackGroundTileSetup _backGroundTileSetup;
         private LevelConfig _levelConfig;
+        private IAnalyticsService _analytics;
 
         public PrepareState(IStateSwitcher stateSwitcher, GameBoard gameBoard,
-            BackGroundTileSetup backGroundTileSetup, BlankTilesSetup blankTilesSetup, LevelConfig levelConfig)
+            BackGroundTileSetup backGroundTileSetup, BlankTilesSetup blankTilesSetup, LevelConfig levelConfig, 
+            IAnalyticsService analytics)
         {
             _stateSwitcher = stateSwitcher;
             _gameBoard = gameBoard;
             _backGroundTileSetup = backGroundTileSetup;
             _blankTilesSetup = blankTilesSetup;
             _levelConfig = levelConfig;
+            _analytics = analytics;
         }
 
         public async void Enter()
@@ -39,6 +44,7 @@ namespace Assets.Scripts.Game.GameStateMachine.AllStates
 
         public void Exit()
         {
+            _analytics.LogLevelStart(_levelConfig.LevelNumber);
             Debug.Log("Game was Started");
         }
     }

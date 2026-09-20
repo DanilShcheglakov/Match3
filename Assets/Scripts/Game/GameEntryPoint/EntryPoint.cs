@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Animations;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Data;
+using Assets.Scripts.FireBase.Analitycs;
 using Assets.Scripts.Game.Board;
 using Assets.Scripts.Game.GameStateMachine;
 using Assets.Scripts.Game.GridSystem;
@@ -12,6 +13,7 @@ using Assets.Scripts.Game.Utils;
 using Assets.Scripts.Levels;
 using Assets.Scripts.ResourcesLoading;
 using Assets.Scripts.SceneLoading;
+using Assets.Scripts.Tools;
 using VContainer.Unity;
 
 namespace Assets.Scripts.Game.EntryPoint
@@ -37,6 +39,7 @@ namespace Assets.Scripts.Game.EntryPoint
         private EndGamePanelView _endGame;
         private BackGroundTileSetup _backGroundTileSetup;
         private FXPool _fxPool;
+        private IAnalyticsService _analytics;
 
         private bool _isDebugging;
 
@@ -44,7 +47,7 @@ namespace Assets.Scripts.Game.EntryPoint
             GameProgress gameProgress, MatchFinder matchFinder, Grid grid,
             GameBoard gameBoard, GameDebug debug, TilePool tilePool, GameData gameData, AudioManager audioManager,
             IAnimation animation, GameResourcesLoader resourcesLoader, SetupCamera setupCamera, IAsyncSceneLoading sceneLoading,
-            EndGamePanelView endGame, BackGroundTileSetup backGroundTileSetup, FXPool fxPool)
+            EndGamePanelView endGame, BackGroundTileSetup backGroundTileSetup, FXPool fxPool, IAnalyticsService analytics)
         {
             _scoreCalculator = scoreCalculator;
             _blankTilesSetup = blankTilesSetup;
@@ -63,6 +66,7 @@ namespace Assets.Scripts.Game.EntryPoint
             _endGame = endGame;
             _backGroundTileSetup = backGroundTileSetup;
             _fxPool = fxPool;
+            _analytics = analytics;
         }
 
         public async void Initialize()
@@ -81,7 +85,8 @@ namespace Assets.Scripts.Game.EntryPoint
             _blankTilesSetup.SetupBlanks(_levelConfig);
 
             _stateMachine = new StateMachine(_gameBoard, _grid, _animation, _matchFinder, _tilePool,
-                _gameProgress, _scoreCalculator, _audioManager, _endGame, _levelConfig, _backGroundTileSetup, _blankTilesSetup, _fxPool);
+                _gameProgress, _scoreCalculator, _audioManager, _endGame, _levelConfig, _backGroundTileSetup, 
+                _blankTilesSetup, _fxPool, _analytics);
 
             _sceneLoading.LoadingIsDone(true);
         }

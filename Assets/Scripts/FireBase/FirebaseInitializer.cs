@@ -1,41 +1,40 @@
 ﻿using Cysharp.Threading.Tasks;
 using Firebase;
+using Firebase.Analytics;
+using Firebase.Auth;
+using Firebase.Crashlytics;
 using System;
 using System.Threading;
 using UnityEngine;
 
 namespace Assets.Scripts.FireBase
 {
-    internal class FirebaseInitializer 
+    internal class FirebaseInitializer
     {
+        public FirebaseApp App { get; private set; }
+        public bool IsReady => App != null;
+
         public async UniTask InitializeAsync(CancellationToken cancellation = default)
         {
             try
             {
                 var status = await FirebaseApp
-                    .CheckAndFixDependenciesAsync()
-                    .AsUniTask()
-                    .AttachExternalCancellation(cancellation);
-
-                if (cancellation.IsCancellationRequested)
-                    return;
+              .CheckAndFixDependenciesAsync()
+              .AsUniTask()
+              .AttachExternalCancellation(cancellation);
 
                 if (status != DependencyStatus.Available)
-                    throw new Exception($"Firebase dependencies not available: {status}");
+                    throw new Exception($"[Firebase] Dependencies not available: {status}");
 
-                if (status == DependencyStatus.Available)
-                {
-                    Debug.Log("Firebase Initializable");
-                }
+                App = FirebaseApp.DefaultInstance;
+                Crashlytics.ReportUncaughtExceptionsAsFatal = true;                             
 
-                // Здесь — Инициализирую другие компоненты в будущем. Сейчас пробую инициализацию самого Firebase
+                Debug.Log("[FirebaseInitializer] Firebase initialized.");
             }
-            catch (OperationCanceledException)
+            catch (Exception ex)
             {
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[FirebaseInitializer] Initialization failed: {e}");
+                Debug.LogException(ex);
+                throw;
             }
         }
     }
