@@ -140,7 +140,7 @@ namespace Assets.Scripts.Game.MatchedTiles
                 var neighbourTile = grid.Getvalue(x, y);
 
                 if (neighbourTile == null)
-                    continue;
+                    break;
 
                 if (neighbourTile.IsInteractable && neighbourTile.IsMatched == false
                     && neighbourTile.TileConfig == tile.TileConfig)

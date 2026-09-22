@@ -4,6 +4,7 @@ using Assets.Scripts.Boot;
 using Assets.Scripts.Data;
 using Assets.Scripts.FireBase;
 using Assets.Scripts.FireBase.Analitycs;
+using Assets.Scripts.FireBase.RemoteConfig;
 using Assets.Scripts.Save;
 using Assets.Scripts.SceneLoading;
 using System;
@@ -17,7 +18,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.DI
 {
-    public  class RootScope : LifetimeScope
+    public class RootScope : LifetimeScope
     {
         [SerializeField] private LoadingView _loadingView;
         [SerializeField] private AudioManager _audioManager;
@@ -25,6 +26,11 @@ namespace Assets.Scripts.DI
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<BootEntryPoint>();
+
+            builder.Register<RemoteLoader>(Lifetime.Singleton)
+                .As<IRemoteLoader>()
+                .As<IRemoteConfigService>();
+
             builder.Register<GameData>(Lifetime.Singleton);
             builder.Register<FirebaseInitializer>(Lifetime.Singleton);
             builder.Register<IAnalyticsService, GameAnalytics>(Lifetime.Singleton);

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Data;
+using Assets.Scripts.FireBase.RemoteConfig;
 using Assets.Scripts.Game.Tiles;
 using Assets.Scripts.Levels;
 using Cysharp.Threading.Tasks;
@@ -17,10 +18,15 @@ namespace Assets.Scripts.ResourcesLoading
 {
     public class GameResourcesLoader : IDisposable
     {
+        readonly IRemoteConfigService _remoteConfig;
         private GameData _gameData;
         private CancellationTokenSource _cts;
 
-        public GameResourcesLoader(GameData gameData) => _gameData = gameData;
+        public GameResourcesLoader(GameData gameData, IRemoteConfigService remoteConfig)
+        {
+            _gameData = gameData;
+            _remoteConfig = remoteConfig;
+        }
 
         public GameObject TilePrefab { get; private set; }
         public GameObject BackgroundTilePrefab { get; private set; }
@@ -53,7 +59,9 @@ namespace Assets.Scripts.ResourcesLoading
         private async UniTask LoadSet()
         {
             _cts = new CancellationTokenSource();
-            switch (_gameData.CurrenLevel.TileSets)
+
+            /*
+            switch (_gameData.CurrenLevel.TileSets)            
             {
                 case TilesSets.Fruits:
                     var tileSets = await Loader<TileSetConfig>("Fruits");
@@ -68,6 +76,24 @@ namespace Assets.Scripts.ResourcesLoading
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            */
+
+            switch (_remoteConfig.GetString("tile_set", "Fruits"))
+            {
+                case "Fruits":
+                    var tileSets = await Loader<TileSetConfig>("Fruits");
+                    CurrentTileSet = tileSets.Set;
+                    break;
+
+                case "Gem":
+                    tileSets = await Loader<TileSetConfig>("Gem");
+                    CurrentTileSet = tileSets.Set;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             _cts.Cancel();
         }
 

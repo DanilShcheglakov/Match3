@@ -29,7 +29,7 @@ namespace Assets.Scripts.Data
 
         public void OpenNextLevel() => CurrentLevelIndex++;
 
-        public bool SetEnabledSound(bool value) => IsEnabledSound == value;
+        public bool SetEnabledSound(bool value) => IsEnabledSound = value;
 
         public void SetCurrentLevel(LevelConfig level)
         {

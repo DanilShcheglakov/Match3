@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Assets.Scripts.FireBase.RemoteConfig;
+using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Auth;
@@ -11,6 +12,13 @@ namespace Assets.Scripts.FireBase
 {
     internal class FirebaseInitializer
     {
+        private IRemoteLoader _remoteConfig;
+
+        public FirebaseInitializer(IRemoteLoader remoteConfig)
+        {
+            _remoteConfig = remoteConfig;
+        }
+
         public FirebaseApp App { get; private set; }
         public bool IsReady => App != null;
 
@@ -27,7 +35,10 @@ namespace Assets.Scripts.FireBase
                     throw new Exception($"[Firebase] Dependencies not available: {status}");
 
                 App = FirebaseApp.DefaultInstance;
-                Crashlytics.ReportUncaughtExceptionsAsFatal = true;                             
+
+                await _remoteConfig.Initialize();
+                
+                Crashlytics.ReportUncaughtExceptionsAsFatal = true;
 
                 Debug.Log("[FirebaseInitializer] Firebase initialized.");
             }
